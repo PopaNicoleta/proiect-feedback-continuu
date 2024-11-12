@@ -1,10 +1,14 @@
 Fluxul principal al aplicației
-Crearea unei activități de către profesor
-1.	Autentificare: Profesorul se autentifică în aplicație și accesează secțiunea de „Creare Activitate”.
-2.	Completarea detaliilor activității: Profesorul completează formularul pentru activitate, adăugând informații precum descrierea, data și ora, durata etc.
-3.	Crearea activității: Aplicația salvează activitatea în sistem și generează un cod unic de acces asociat acesteia.
-4.	Distribuirea codului: Profesorul primește codul unic, pe care îl poate distribui studenților pentru a le permite să participe la activitate.
-Participarea unui student la activitate
+****Crearea unei activități de către profesor****
+**1.	Autentificare:**
+Profesorul se autentifică în aplicație și accesează secțiunea de „Creare Activitate”.
+**2.	Completarea detaliilor activității:** 
+Profesorul completează formularul pentru activitate, adăugând informații precum descrierea, data și ora, durata etc.
+**3.	Crearea activității: **
+Aplicația salvează activitatea în sistem și generează un cod unic de acces asociat acesteia.
+**4.	Distribuirea codului: **
+Profesorul primește codul unic, pe care îl poate distribui studenților pentru a le permite să participe la activitate.
+**Participarea unui student la activitate**
 1.	Recepționarea codului: Studentul primește codul unic de acces de la profesor.
 2.	Înregistrarea în activitate: Studentul introduce codul în aplicație pentru a se înscrie la activitate.
 3.	Accesarea activității: Dacă activitatea este validă și în intervalul de timp stabilit, studentul poate accesa interfața dedicată feedback-ului, care este un sistem de reacții (emoticoane).
