@@ -1,36 +1,31 @@
-export const ActivityTemplate = (db, DataTypes) => {
-    return db.define("activities", {
+export const UserTemplate = (db, DataTypes) => {
+    return db.define("users", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        professor_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: "users",
-                key: "id"
-            }
-        },
-        title: {
+        first_name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: false
         },
-        description: {
-            type: DataTypes.TEXT
+        last_name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: false
         },
-        access_code: {
+        email: {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true
         },
-        start_time: {
-            type: DataTypes.DATE,
+        password: {
+            type: DataTypes.STRING,
             allowNull: false
         },
-        end_time: {
-            type: DataTypes.DATE,
+        role: {
+            type: DataTypes.ENUM("professor", "student"),
             allowNull: false
         },
         created_at: {
@@ -41,8 +36,8 @@ export const ActivityTemplate = (db, DataTypes) => {
         underscored: true,
         indexes: [
             {
-                fields: ['professor_id']
-            }
+                fields: ['role']
+            },
         ]
     });
 };

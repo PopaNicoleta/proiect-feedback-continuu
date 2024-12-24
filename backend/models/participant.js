@@ -1,5 +1,5 @@
-export const FeedbackTemplate = (db, DataTypes) => {
-    return db.define("feedback", {
+export const ParticipantTemplate = (db, DataTypes) => {
+    return db.define("participants", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -14,11 +14,16 @@ export const FeedbackTemplate = (db, DataTypes) => {
             },
             onDelete: "CASCADE"
         },
-        emoji: {
-            type: DataTypes.ENUM('smiley', 'frowny', 'surprised', 'confused'),
-            allowNull: false
+        student_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: "users",
+                key: "id"
+            },
+            onDelete: "CASCADE"
         },
-        timestamp: {
+        joined_at: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW
         }
@@ -26,13 +31,8 @@ export const FeedbackTemplate = (db, DataTypes) => {
         underscored: true,
         indexes: [
             {
-                fields: ['activity_id']
-            },
-            {
-                fields: ['emoji']
-            },
-            {
-                fields: ['timestamp']
+                unique: true,
+                fields: ['activity_id', 'student_id']
             }
         ]
     });
