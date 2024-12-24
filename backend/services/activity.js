@@ -1,60 +1,50 @@
-import { User } from "../models/config";
-import { Op } from "sequelize";
+import { Activity } from "../models/config";
+import { Op, where } from "sequelize";
 
-const createUser = async (user) => {
-    delete user.id;
+const createActivity = async (activity) => {
+    delete activity.id;
 
-    return User.create(user);
+    return await Activity.create(activity); 
 }
 
-const getUsers = async (filters) => {
-    const userKeys = Object.keys(User.getAttributes());
+const getActivities = async (filters) => {
+    const activityKeys = Object.keys(Activity.getAttributes());
 
     const filterConditions = {};
 
-    //filtrare dupa rol
-    if(filters.role && !Array.isArray(filters.role) && ['professor', 'student'].includes(filters.role)) {
-        filterConditions.role = filters.role;
+    if (filters.professor) {
+        if (Array.isArray(filters.professor)) {
+            filterConditions.professor_id = { [Op.in]: filters.professor };
+        } else {
+            filterConditions.professor_id = filters.professor;
+        }
     }
 
-    //filtrare dupa nume
-    if (filters.searchString) {
-        filterConditions[Op.or] = [
-            { firstName: { [Op.like]: `%${filters.searchString}%` } },
-            { lastName: { [Op.like]: `%${filters.searchString}%` } },   
-            { [Op.and]: [ 
-                { firstName: { [Op.like]: `%${filters.searchString.split(' ')[0]}%` } },
-                { lastName: { [Op.like]: `%${filters.searchString.split(' ')[1] || ''}%` } }
-            ]}
-        ];
-    }
-
-    return await User.findAll({
-        where: filterConditions
-    })  
-};
-
-const getUserById = async (userId) => {
-    return await User.findByPk(userId);
+    return await Activity.findAll({where: filterConditions});
 }
 
-const updateUser = async (user) => {
-    const identifiedUser = await getUserById(user.id);
-    if(!!identifiedUser) {
-        const { id, ...updatedData } = user;
-        identifiedUser.set({updatedData});
-        return await identifiedUser.save();
-    }
+const getActivityById = async (activityId) => {
+    return await Activity.findByPk(userId);
 }
 
-const deleteUser = async (id) => {
-    return await User.destroy({where: {id: id}});
+const updateActivity = async (activity) => {
+    const identifiedActivity = await getActivityById(activity.id);
+    if(!!identifiedActivity) {
+        const {id, ...updatedData} = activity;
+        identifiedActivity.set(updatedData);
+        return await identifiedActivity.save();
+    }
+    return null;
+}
+
+const deleteActivity = async (activityId) => {
+    return await Activity.destroy({where: {id: activityId}});
 }
 
 export {
-    createUser,
-    getUserById,
-    getUsers,
-    updateUser,
-    deleteUser
-};
+    getActivities,
+    getActivityById,
+    createActivity,
+    updateActivity,
+    deleteActivity
+}
