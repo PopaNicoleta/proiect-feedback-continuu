@@ -1,5 +1,5 @@
 import { Activity } from "../models/config";
-import { Op, where } from "sequelize";
+import { Op } from "sequelize";
 
 const createActivity = async (activity) => {
     delete activity.id;
