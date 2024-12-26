@@ -1,0 +1,408 @@
+{
+	"info": {
+		"_postman_id": "ad46ecf2-0cb2-45c0-8773-4a77e83091dc",
+		"name": "proiect-feedback-continuu",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24891925"
+	},
+	"item": [
+		{
+			"name": "feedback",
+			"item": [
+				{
+					"name": "getFeedback",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/feedback",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"feedback"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createFeedback",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"activity_id\": 1,\r\n        \"emoji\": \"smiley\",\r\n        \"timestamp\": \"2024-01-15T10:30:00Z\"\r\n    },\r\n    {\r\n        \"activity_id\": 1,\r\n        \"emoji\": \"frowny\",\r\n        \"timestamp\": \"2024-01-15T11:00:00Z\"\r\n    },\r\n    {\r\n        \"activity_id\": 2,\r\n        \"emoji\": \"surprised\",\r\n        \"timestamp\": \"2024-01-16T14:30:00Z\"\r\n    },\r\n    {\r\n        \"activity_id\": 2,\r\n        \"emoji\": \"smiley\",\r\n        \"timestamp\": \"2024-01-16T15:00:00Z\"\r\n    },\r\n    {\r\n        \"activity_id\": 3,\r\n        \"emoji\": \"confused\",\r\n        \"timestamp\": \"2024-01-17T10:00:00Z\"\r\n    },\r\n    {\r\n        \"activity_id\": 3,\r\n        \"emoji\": \"smiley\",\r\n        \"timestamp\": \"2024-01-17T10:45:00Z\"\r\n    },\r\n    {\r\n        \"activity_id\": 4,\r\n        \"emoji\": \"smiley\",\r\n        \"timestamp\": \"2024-01-18T13:15:00Z\"\r\n    },\r\n    {\r\n        \"activity_id\": 4,\r\n        \"emoji\": \"frowny\",\r\n        \"timestamp\": \"2024-01-18T14:00:00Z\"\r\n    },\r\n    {\r\n        \"activity_id\": 5,\r\n        \"emoji\": \"surprised\",\r\n        \"timestamp\": \"2024-01-19T11:30:00Z\"\r\n    },\r\n    {\r\n        \"activity_id\": 5,\r\n        \"emoji\": \"smiley\",\r\n        \"timestamp\": \"2024-01-19T12:30:00Z\"\r\n    }\r\n]\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/feedback",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"feedback"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateFeedback",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/feedback",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"feedback"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteFeedback",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/feedback",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"feedback"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "activity",
+			"item": [
+				{
+					"name": "getActivity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/activities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createActivity",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"professor_id\": 1,\r\n        \"title\": \"Introduction to Quantum Mechanics\",\r\n        \"description\": \"An engaging session exploring the fundamental principles of quantum mechanics.\",\r\n        \"access_code\": \"QUANTUM123\",\r\n        \"start_time\": \"2024-01-15T10:00:00Z\",\r\n        \"end_time\": \"2024-01-15T12:00:00Z\"\r\n    },\r\n    {\r\n        \"professor_id\": 2,\r\n        \"title\": \"Advanced Algebra\",\r\n        \"description\": \"Delve into complex algebraic structures and applications in modern mathematics.\",\r\n        \"access_code\": \"ALGEBRA456\",\r\n        \"start_time\": \"2024-01-16T14:00:00Z\",\r\n        \"end_time\": \"2024-01-16T16:00:00Z\"\r\n    },\r\n    {\r\n        \"professor_id\": 3,\r\n        \"title\": \"Relativity Theory Simplified\",\r\n        \"description\": \"Discover the essentials of Einstein's theory of relativity in this interactive session.\",\r\n        \"access_code\": \"RELATIVE789\",\r\n        \"start_time\": \"2024-01-17T09:30:00Z\",\r\n        \"end_time\": \"2024-01-17T11:30:00Z\"\r\n    },\r\n    {\r\n        \"professor_id\": 4,\r\n        \"title\": \"Radiation and Its Applications\",\r\n        \"description\": \"Explore the use of radiation in medicine, research, and technology.\",\r\n        \"access_code\": \"RADIATE001\",\r\n        \"start_time\": \"2024-01-18T13:00:00Z\",\r\n        \"end_time\": \"2024-01-18T15:00:00Z\"\r\n    },\r\n    {\r\n        \"professor_id\": 5,\r\n        \"title\": \"Calculus in Physics\",\r\n        \"description\": \"Learn how calculus principles apply to solving real-world physics problems.\",\r\n        \"access_code\": \"CALCULEX002\",\r\n        \"start_time\": \"2024-01-19T11:00:00Z\",\r\n        \"end_time\": \"2024-01-19T13:00:00Z\"\r\n    }\r\n]\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/activities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateActivity",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/activities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteActivity",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/activities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"activities"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "participant",
+			"item": [
+				{
+					"name": "getParticipant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/participants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"participants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createParticipant",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/participants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"participants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateParticipant",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/participants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"participants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteParticipant",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/participants",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"participants"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "getUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/users?searchString=john",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							],
+							"query": [
+								{
+									"key": "searchString",
+									"value": "john"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"first_name\": \"John\",\r\n        \"last_name\": \"Doe\",\r\n        \"email\": \"john.doe@university.com\",\r\n        \"password\": \"password123\",\r\n        \"role\": \"professor\"\r\n    },\r\n    {\r\n        \"first_name\": \"Jane\",\r\n        \"last_name\": \"Smith\",\r\n        \"email\": \"jane.smith@university.com\",\r\n        \"password\": \"password123\",\r\n        \"role\": \"professor\"\r\n    },\r\n    {\r\n        \"first_name\": \"Albert\",\r\n        \"last_name\": \"Einstein\",\r\n        \"email\": \"albert.einstein@university.com\",\r\n        \"password\": \"password123\",\r\n        \"role\": \"professor\"\r\n    },\r\n    {\r\n        \"first_name\": \"Marie\",\r\n        \"last_name\": \"Curie\",\r\n        \"email\": \"marie.curie@university.com\",\r\n        \"password\": \"password123\",\r\n        \"role\": \"professor\"\r\n    },\r\n    {\r\n        \"first_name\": \"Isaac\",\r\n        \"last_name\": \"Newton\",\r\n        \"email\": \"isaac.newton@university.com\",\r\n        \"password\": \"password123\",\r\n        \"role\": \"professor\"\r\n    },\r\n    {\r\n        \"first_name\": \"Alice\",\r\n        \"last_name\": \"Williams\",\r\n        \"email\": \"alice.williams@student.com\",\r\n        \"password\": \"password123\",\r\n        \"role\": \"student\"\r\n    },\r\n    {\r\n        \"first_name\": \"Bob\",\r\n        \"last_name\": \"Johnson\",\r\n        \"email\": \"bob.johnson@student.com\",\r\n        \"password\": \"password123\",\r\n        \"role\": \"student\"\r\n    },\r\n    {\r\n        \"first_name\": \"Charlie\",\r\n        \"last_name\": \"Brown\",\r\n        \"email\": \"charlie.brown@student.com\",\r\n        \"password\": \"password123\",\r\n        \"role\": \"student\"\r\n    },\r\n    {\r\n        \"first_name\": \"David\",\r\n        \"last_name\": \"Lee\",\r\n        \"email\": \"david.lee@student.com\",\r\n        \"password\": \"password123\",\r\n        \"role\": \"student\"\r\n    },\r\n    {\r\n        \"first_name\": \"Eve\",\r\n        \"last_name\": \"Davis\",\r\n        \"email\": \"eve.davis@student.com\",\r\n        \"password\": \"password123\",\r\n        \"role\": \"student\"\r\n    }\r\n]\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 2,\r\n    \"first_name\": \"Nicoleta\",\r\n    \"last_name\": \"Popesculuss\",\r\n    \"email\": \"paddddul@mail.co\",\r\n    \"password\": \"pass03\",\r\n    \"role\": \"professor\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

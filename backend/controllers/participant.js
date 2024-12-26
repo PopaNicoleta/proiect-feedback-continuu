@@ -1,12 +1,12 @@
-import * as participantService from "../services/participant";
+import * as participantService from "../services/participant.js";
 
 const getParticipants = async (req, res) => {
     res.send({ participants: await participantService.getParticipants(req.query) });
 };
 
-const createParticipant = async (req, res) => {
+const createParticipants = async (req, res) => {
     try {
-        res.status(201).send({ participant: await participantService.createParticipant(req.body) });
+        res.status(201).send({ participants: await participantService.createParticipants(req.body) });
     } catch (err) {
         res.status(400).send({ message: err.message });
     }
@@ -28,7 +28,7 @@ const deleteParticipant = async (req, res) => {
 
 export {
     getParticipants,
-    createParticipant,
+    createParticipants,
     updateParticipant,
     deleteParticipant
 };

@@ -1,4 +1,4 @@
-import { Participant } from "../models/config";
+import { Participant } from "../models/config.js";
 import { Op } from "sequelize";
 
 const getParticipants = async (filters) => {
@@ -16,10 +16,12 @@ const getParticipants = async (filters) => {
     return await Participant.findAll({ where: filterConditions });
 };
 
-const createParticipant = async (participant) => {
-    delete participant.id; 
+const createParticipants = async (participants) => {
+    participants.forEach(participant => {
+        delete participant.id; 
+    });
 
-    return await Participant.create(participant);
+    return await Participant.bulkCreate(participants);
 };
 
 const getParticipantById = async (participantId) => {
@@ -42,7 +44,7 @@ const deleteParticipant = async (participantId) => {
 
 export {
     getParticipants,
-    createParticipant,
+    createParticipants,
     getParticipantById,
     updateParticipant,
     deleteParticipant

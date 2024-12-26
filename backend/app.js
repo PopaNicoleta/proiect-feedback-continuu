@@ -1,18 +1,34 @@
-import express from "express";
-import { router as activityRouter } from "./routes/activity";
-import { router as participantRouter } from "./routes/participant";
-import { router as userRouter } from "./routes/user";
-import { router as feedbackRouter } from "./routes/feedback";
+import express from 'express';
+import { router } from './routes/config.js';
+import { synchronizeDatabase } from './models/config.js';
+import cors from 'cors';
+
+const PORT = 8080;
 
 const app = express();
 
+// Middleware
 app.use(express.json());
-app.use("/activities", activityRouter);
-app.use("/participants", participantRouter);
-app.use("/users", userRouter);
-app.use("/feedback", feedbackRouter);
+app.use(cors());
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// Route prefix
+app.use("/api/v1", router);
+
+const startServer = async () => {
+  try {
+    // Synchronize the database before starting the server
+    await synchronizeDatabase();
+    console.log("Database synchronized successfully.");
+
+    // Start the server
+    app.listen(PORT, () => {
+      console.log(`Server started on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to synchronize the database:", error.message);
+    process.exit(1); // Exit the process with an error code
+  }
+};
+
+// Start the server
+startServer();

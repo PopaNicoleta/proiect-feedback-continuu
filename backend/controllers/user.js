@@ -1,16 +1,19 @@
-import * as userService from "../services/user";
+import * as userService from "../services/user.js";
 
 const getUsers = async (req, res) => {
     res.send({ users: await userService.getUsers(req.query) });
 };
 
-const createUser = async (req, res) => {
+const createUsers = async (req, res) => {
     try {
-        res.status(201).send({ user: await userService.createUser(req.body) });
+        const users = await userService.createUsers(req.body);
+        res.status(201).send({ users }); 
     } catch (err) {
+        console.error("Error creating users:", err);
         res.status(400).send({ message: err.message });
     }
 };
+
 
 const updateUser = async (req, res) => {
     const updatedUser = await userService.updateUser(req.body);
@@ -28,7 +31,7 @@ const deleteUser = async (req, res) => {
 
 export {
     getUsers,
-    createUser,
+    createUsers,
     updateUser,
     deleteUser
 };

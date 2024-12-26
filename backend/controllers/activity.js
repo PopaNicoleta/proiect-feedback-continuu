@@ -1,12 +1,12 @@
-import * as activityService from "../services/activity";
+import * as activityService from "../services/activity.js";
 
 const getActivities = async (req, res) => {
     res.send({activities: await activityService.getActivities(req.query)});
 };
 
-const createActivity = async (req,res) => {
+const createActivities = async (req,res) => {
     try {
-        res.status(201).send({activity: await activityService.createActivity(req.body)});
+        res.status(201).send({activities: await activityService.createActivities(req.body)});
     }
     catch (err) {
         res.status(400).send({message: err.message});
@@ -31,7 +31,7 @@ const deleteActivity = async(req,res) => {
 
 export {
     getActivities,
-    createActivity,
+    createActivities,
     updateActivity,
     deleteActivity
 }

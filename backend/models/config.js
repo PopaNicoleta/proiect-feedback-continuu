@@ -1,12 +1,12 @@
 import { DataTypes, Sequelize } from "sequelize";
-import { UserTemplate } from "./user";
-import { ActivityTemplate } from "./activity";
-import { FeedbackTemplate } from "./feedback";
-import { ParticipantTemplate } from "./participant";
+import { UserTemplate } from "./user.js";
+import { ActivityTemplate } from "./activity.js";
+import { FeedbackTemplate } from "./feedback.js";
+import { ParticipantTemplate } from "./participant.js";
 
 export const db = new Sequelize({
     dialect: "sqlite",
-    storage: "continuous_feedback.db"
+    storage: "./backend/continuous_feedback.db"
 });
 
 export const synchronizeDatabase = async () => {
@@ -23,7 +23,7 @@ User.hasMany(Activity, { foreignKey: 'professor_id', as: 'createdActivities' });
 Activity.belongsTo(User, { foreignKey: 'professor_id', as: 'professor' });
 
 User.belongsToMany(Activity, { through: Participant, foreignKey: 'student_id', as: 'participatedActivities' });
-Activity.belongsToMany(User, { through: Participant, foreignKey: 'activity_id', as: 'participants' });
+Activity.belongsToMany(User, { through: Participant, foreignKey: 'activity_id', as: 'activityParticipants' });
 
 Activity.hasMany(Feedback, { foreignKey: 'activity_id', as: 'feedbacks' });
 Feedback.belongsTo(Activity, { foreignKey: 'activity_id', as: 'activity' });

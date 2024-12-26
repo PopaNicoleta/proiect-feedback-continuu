@@ -1,12 +1,12 @@
-import * as feedbackService from "../services/feedback";
+import * as feedbackService from "../services/feedback.js";
 
 const getFeedback = async (req, res) => {
     res.send({ feedback: await feedbackService.getFeedback(req.query) });
 };
 
-const createFeedback = async (req, res) => {
+const createFeedbacks = async (req, res) => {
     try {
-        res.status(201).send({ feedback: await feedbackService.createFeedback(req.body) });
+        res.status(201).send({ feedbacks: await feedbackService.createFeedbacks(req.body) });
     } catch (err) {
         res.status(400).send({ message: err.message });
     }
@@ -28,7 +28,7 @@ const deleteFeedback = async (req, res) => {
 
 export {
     getFeedback,
-    createFeedback,
+    createFeedbacks,
     updateFeedback,
     deleteFeedback
 };

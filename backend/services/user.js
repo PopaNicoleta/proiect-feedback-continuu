@@ -1,11 +1,14 @@
-import { User } from "../models/config";
+import { User } from "../models/config.js";
 import { Op } from "sequelize";
 
-const createUser = async (user) => {
-    delete user.id;
+const createUsers = async (users) => {
+    users.forEach(user => {
+        delete user.id;
+    });
 
-    return await User.create(user);
+    return await User.bulkCreate(users);
 }
+
 
 const getUsers = async (filters) => {
     const userKeys = Object.keys(User.getAttributes());
@@ -20,11 +23,11 @@ const getUsers = async (filters) => {
     //filtrare dupa nume
     if (filters.searchString) {
         filterConditions[Op.or] = [
-            { firstName: { [Op.like]: `%${filters.searchString}%` } },
-            { lastName: { [Op.like]: `%${filters.searchString}%` } },   
+            { first_name: { [Op.like]: `%${filters.searchString}%` } },
+            { last_name: { [Op.like]: `%${filters.searchString}%` } },   
             { [Op.and]: [ 
-                { firstName: { [Op.like]: `%${filters.searchString.split(' ')[0]}%` } },
-                { lastName: { [Op.like]: `%${filters.searchString.split(' ')[1] || ''}%` } }
+                { first_name: { [Op.like]: `%${filters.searchString.split(' ')[0]}%` } },
+                { last_name: { [Op.like]: `%${filters.searchString.split(' ')[1] || ''}%` } }
             ]}
         ];
     }
@@ -53,7 +56,7 @@ const deleteUser = async (userId) => {
 }
 
 export {
-    createUser,
+    createUsers,
     getUserById,
     getUsers,
     updateUser,

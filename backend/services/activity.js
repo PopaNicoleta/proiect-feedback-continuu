@@ -1,10 +1,12 @@
-import { Activity } from "../models/config";
+import { Activity } from "../models/config.js";
 import { Op } from "sequelize";
 
-const createActivity = async (activity) => {
-    delete activity.id;
+const createActivities = async (activities) => {
+    activities.forEach(activity => {
+        delete activity.id;
+    });
 
-    return await Activity.create(activity); 
+    return await Activity.bulkCreate(activities);
 }
 
 const getActivities = async (filters) => {
@@ -44,7 +46,7 @@ const deleteActivity = async (activityId) => {
 export {
     getActivities,
     getActivityById,
-    createActivity,
+    createActivities,
     updateActivity,
     deleteActivity
 }

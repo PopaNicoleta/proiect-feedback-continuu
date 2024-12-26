@@ -1,10 +1,12 @@
-import { Feedback } from "../models/config";
+import { Feedback } from "../models/config.js";
 import { Op } from "sequelize";
 
-const createFeedback = async (feedback) => {
-    delete feedback.id;
+const createFeedbacks = async (feedbacks) => {
+    feedbacks.forEach(feedback => {
+        delete feedback.id;
+    });
 
-    return await Feedback.create(feedback);
+    return await Feedback.bulkCreate(feedbacks);
 };
 
 const getFeedback = async (filters) => {
@@ -46,7 +48,7 @@ const deleteFeedback = async (feedbackId) => {
 };
 
 export {
-    createFeedback,
+    createFeedbacks,
     getFeedback,
     getFeedbackById,
     updateFeedback,
