@@ -29,9 +29,20 @@ const deleteUser = async (req, res) => {
     res.status(200).send({ message: "User deleted" });
 };
 
+const login = async (req, res) => {
+    const loginData = await userService.login(req.body);
+    if (loginData.success) {//loginData primeste din Service datele de user si boolean success
+        res.status(200).send(loginData);
+    }
+    else {
+        res.status(400).send({message: "Login failed."});
+    }
+}
+
 export {
     getUsers,
     createUsers,
     updateUser,
-    deleteUser
+    deleteUser,
+    login
 };
