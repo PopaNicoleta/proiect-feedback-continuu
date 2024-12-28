@@ -12,3 +12,5 @@ router.patch("/", userController.updateUser);
 router.delete("/", userController.deleteUser);
 
 router.post("/login", userController.login);
+
+router.post("/register", userController.register);

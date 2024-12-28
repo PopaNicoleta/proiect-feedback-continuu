@@ -6,7 +6,7 @@ const getUsers = async (req, res) => {
 
 const createUsers = async (req, res) => {
     try {
-        const users = await userService.createUsers(req.body);
+        const usersCreated = await userService.createUsers(req.body);
         res.status(201).send({ users }); 
     } catch (err) {
         console.error("Error creating users:", err);
@@ -31,18 +31,44 @@ const deleteUser = async (req, res) => {
 
 const login = async (req, res) => {
     const loginData = await userService.login(req.body);
-    if (loginData.success) {//loginData primeste din Service datele de user si boolean success
-        res.status(200).send(loginData);
+    if (loginData.success) {//loginData primeste din Service datele de user, boolean success si boolean userExists
+        res.status(200).send(loginData.user);
     }
     else {
-        res.status(400).send({message: "Login failed."});
+        if(loginData.userExists) {
+            res.status(400).send({message: "Login failed."});
+        }
+        else {
+            res.status(404).send({message: "User not found."});
+        }
+        
     }
-}
+};
+
+const register = async (req, res) => {
+    const existingEmailUsers = await userService.getUsers({email: req.body.email});
+    const isNewEmail = !existingEmailUsers || existingEmailUsers.length === 0;
+
+    if (isNewEmail) {
+        const registerSuccessful = await userService.register(req.body);
+
+        if (registerSuccessful) {
+            return res.status(201).send({
+                 message: `User ${req.body.first_name} ${req.body.last_name} registered successfully.`,
+                 email: req.body.email });
+        } else {
+            return res.status(500).send({ message: "Failed to register user" });
+        }
+    } else {
+        return res.status(409).send({ message: "Email already exists" });
+    }
+};
 
 export {
     getUsers,
     createUsers,
     updateUser,
     deleteUser,
-    login
+    login,
+    register
 };

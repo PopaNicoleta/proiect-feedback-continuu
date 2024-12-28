@@ -6,7 +6,7 @@ import { ParticipantTemplate } from "./participant.js";
 
 export const db = new Sequelize({
     dialect: "sqlite",
-    storage: "./backend/continuous_feedback.db"
+    storage: "continuous_feedback.db"
 });
 
 export const synchronizeDatabase = async () => {

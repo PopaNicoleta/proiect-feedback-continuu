@@ -1,12 +1,15 @@
 import { User } from "../models/config.js";
 import { Op } from "sequelize";
+import bcrypt from "bcrypt";
 
 const createUsers = async (users) => {
     users.forEach(user => {
         delete user.id;
     });
 
-    return await User.bulkCreate(users);
+    const createdUsers = await User.bulkCreate(users);
+
+    return createdUsers.length > 0 ? true : false;
 }
 
 
@@ -61,25 +64,49 @@ const deleteUser = async (userId) => {
     return await User.destroy({where: {id: userId}});
 }
 
-const login = async (credentials) => {//TODO: finish that shit
+const login = async (credentials) => {
     const { email, password } = credentials;
 
     const user = await getUsers({ email });
 
+    const loginData = {
+        success: false,
+        userExists: false,
+    };
+
     if (user && user.length === 1) {
+        loginData.userExists = true;
         const identifiedUser = user[0];
 
-        const isPasswordValid = await bcrypt.compare(password, identifiedUser.password);
-
-        if (isPasswordValid) {
-            const { password, ...userData } = identifiedUser.toJSON();
-            return userData;
-        } else {
-            throw new Error("Parolă incorectă");
+        if(password) {
+            const isPasswordValid = await bcrypt.compare(password, identifiedUser.password);
+    
+            if (isPasswordValid) {
+                const { id, password, createdAt, updatedAt, ...userData } = identifiedUser.toJSON();
+                loginData.success = true;
+                loginData.user = userData;
+            }
         }
-    } else {
-        throw new Error("Email-ul nu este înregistrat");
     }
+
+    return loginData;
+};
+
+const register = async (credentials) => {
+    const {first_name, last_name, email, role} = credentials;
+
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(credentials.password, saltRounds);
+
+    const newUser = {
+        first_name,
+        last_name,
+        email,
+        password: hashedPassword,
+        role
+    };
+
+    return await createUsers([newUser]);
 };
 
 export {
@@ -87,5 +114,7 @@ export {
     getUserById,
     getUsers,
     updateUser,
-    deleteUser
+    deleteUser,
+    login,
+    register
 };

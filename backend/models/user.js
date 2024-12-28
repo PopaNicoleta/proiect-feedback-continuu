@@ -27,10 +27,6 @@ export const UserTemplate = (db, DataTypes) => {
         role: {
             type: DataTypes.ENUM("professor", "student"),
             allowNull: false
-        },
-        created_at: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW
         }
     }, {
         underscored: true,

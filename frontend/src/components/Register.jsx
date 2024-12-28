@@ -6,6 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
+import { useNavigate } from "react-router";
 
 const theme = createTheme({
     palette: {
@@ -30,6 +31,7 @@ const theme = createTheme({
     },
 });
 
+
 const Register = () => {
     const [formData, setFormData] = useState({
         first_name: "",
@@ -39,6 +41,9 @@ const Register = () => {
         role: "",
     });
 
+    const [statusMessage, setStatusMessage] = useState("");
+    const navigate = useNavigate();
+
     const handleChange = (event) => {
         setFormData({
             ...formData,
@@ -46,10 +51,34 @@ const Register = () => {
         });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         console.log("Submitted Data:", formData);
-        // Add logic to send data to your backend
+
+        try {
+            const response = await fetch("http://localhost:8080/api/v1/users/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+
+            console.log(response);
+
+            if (response.ok) {
+                const result = await response.json();
+                setStatusMessage(`Success: ${result.message} Email: ${result.email}`);
+                navigate(`/login?email=${encodeURIComponent(result.email)}`);
+            } else if (response.status === 409) {
+                setStatusMessage("Error: Email already exists. Please try a different email.");
+                alert(statusMessage);
+            } else if (response.status === 500) {
+                setStatusMessage("Error: Registration failed. Please try again later.");
+            } else {
+                setStatusMessage("Unexpected error. Please try again.");
+            }
+        } catch (error) {
+            setStatusMessage("Error: Could not connect to the server. Please check your network.");
+        }
     };
 
     return (

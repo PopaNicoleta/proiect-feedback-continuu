@@ -32,7 +32,8 @@ const theme = createTheme({
 
 const Login = () => {
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({ email: "", password: "" });
+    const emailFromQuery = new URLSearchParams(location.search).get("email");
+    const [formData, setFormData] = useState({ email: emailFromQuery || "", password: "" });
 
     const handleChange = (event) => {
         setFormData({
