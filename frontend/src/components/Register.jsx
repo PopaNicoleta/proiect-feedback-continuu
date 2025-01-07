@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
@@ -7,30 +6,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useNavigate } from "react-router";
-
-const theme = createTheme({
-    palette: {
-        mode: "dark",
-        primary: {
-            main: "#F29F58", // Primary color for buttons and highlights
-        },
-        secondary: {
-            main: "#AB4459", // Secondary color for accents
-        },
-        background: {
-            default: "#1B1833", // Outer background
-            paper: "#441752", // Form background
-        },
-        text: {
-            primary: "#F3E5F5", // Light text for readability
-            secondary: "#F29F58", // Highlighted text
-        },
-    },
-    typography: {
-        fontFamily: "'Roboto', 'Arial', sans-serif",
-    },
-});
-
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -53,7 +28,6 @@ const Register = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("Submitted Data:", formData);
 
         try {
             const response = await fetch("http://localhost:8080/api/v1/users/register", {
@@ -61,8 +35,6 @@ const Register = () => {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
-
-            console.log(response);
 
             if (response.ok) {
                 const result = await response.json();
@@ -82,7 +54,7 @@ const Register = () => {
     };
 
     return (
-        <ThemeProvider theme={theme}>
+        <>
             <CssBaseline /> {/* Reset default browser styles */}
             <Box
                 sx={{
@@ -90,8 +62,8 @@ const Register = () => {
                     justifyContent: "center",
                     alignItems: "center",
                     minHeight: "100vh",
-                    height: "100vh", // Prevent scrolling
-                    overflow: "hidden", // Disable scrollbars
+                    height: "100vh",
+                    overflow: "hidden", 
                     bgcolor: "background.default",
                     color: "text.primary",
                     margin: 0,
@@ -182,9 +154,16 @@ const Register = () => {
                     >
                         Register
                     </Button>
+                    <Typography
+                        align="center"
+                        sx={{ cursor: "pointer", color: "secondary.main", mt: 2 }}
+                        onClick={() => navigate("/login")}
+                    >
+                        Back to Login
+                    </Typography>
                 </Box>
             </Box>
-        </ThemeProvider>
+        </>
     );
 };
 

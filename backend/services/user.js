@@ -41,6 +41,10 @@ const getUsers = async (filters) => {
         filterConditions.email = filters.email;
     }
 
+    if(filters.id) {
+        filterConditions.id = filters.id;
+    }
+
     return await User.findAll({
         where: filterConditions
     });
@@ -82,13 +86,12 @@ const login = async (credentials) => {
             const isPasswordValid = await bcrypt.compare(password, identifiedUser.password);
     
             if (isPasswordValid) {
-                const { id, password, createdAt, updatedAt, ...userData } = identifiedUser.toJSON();
+                const { password, createdAt, updatedAt, ...userData } = identifiedUser.toJSON();
                 loginData.success = true;
                 loginData.user = userData;
             }
         }
     }
-
     return loginData;
 };
 

@@ -1,39 +1,23 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
 
-const theme = createTheme({
-    palette: {
-        mode: "dark",
-        primary: {
-            main: "#F29F58", // Primary color
-        },
-        secondary: {
-            main: "#AB4459", // Secondary color
-        },
-        background: {
-            default: "#1B1833", // Outer background
-            paper: "#441752", // Form background
-        },
-        text: {
-            primary: "#F3E5F5",
-            secondary: "#F29F58",
-        },
-    },
-    typography: {
-        fontFamily: "'Roboto', 'Arial', sans-serif",
-    },
-});
-
 const Login = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const emailFromQuery = new URLSearchParams(location.search).get("email");
     const [formData, setFormData] = useState({ email: emailFromQuery || "", password: "" });
+
+    useEffect(() => {
+        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        if (userInfo && userInfo.isLogged) {
+            navigate(`/${userInfo.userRole}`);
+        }
+    }, [navigate]);
 
     const handleChange = (event) => {
         setFormData({
@@ -42,28 +26,37 @@ const Login = () => {
         });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("Login Data:", formData);
-        // Add logic to verify login
-        const loginInfo = {
-            userId: 1,
-            role: "student"
-        }//call catre backend
-        localStorage.setItem("userInfo", JSON.stringify({
-            isLogged: true,
-            userId: loginInfo.userId
-        }));
-        if(loginInfo.role === "professor") {//TODO: change this
-            navigate("/professor");
-        }
+
+        const response = await fetch("http://localhost:8080/api/v1/users/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+        });
+
+        if(response.ok) {
+            const result = await response.json();
+            localStorage.setItem("userInfo", JSON.stringify({
+                userId: result.id,
+                isLogged: true,
+                userEmail: result.email,
+                userRole: result.role
+            }));
+            if(result.role === "professor") {
+                navigate("/professor");
+            }
+            else {
+                navigate("/student");
+            }
+        } 
         else {
-            navigate("/student");
+            alert("Wrong credentials!");
         }
     };
 
     return (
-        <ThemeProvider theme={theme}>
+        <>
             <CssBaseline />
             <Box
                 sx={{
@@ -140,7 +133,7 @@ const Login = () => {
                     </Typography>
                 </Box>
             </Box>
-        </ThemeProvider>
+        </>
     );
 };
 

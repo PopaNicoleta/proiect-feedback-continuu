@@ -10,3 +10,5 @@ router.post("/", activityController.createActivities);
 router.patch("/", activityController.updateActivity);
 
 router.delete("/", activityController.deleteActivity);
+
+router.post("/join", activityController.joinActivity);

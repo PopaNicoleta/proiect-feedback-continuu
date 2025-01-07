@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import './App.css'
 import { useNavigate } from "react-router-dom";
 
 function App() {
@@ -11,14 +10,9 @@ function App() {
 
   useEffect(() => {
     const info = localStorage.getItem('userInfo');
-    console.log(info);
     if(info) {
       setUserInfo(info);
-      if(info.isLogged) {
-        //const usgetUserById(id) in backend
-        //if(user.type === "professor") redirect
-      } 
-      else {
+      if(!info.isLogged) {
         navigate("/login");
       }
     }
@@ -28,7 +22,7 @@ function App() {
   }, []);
 
   return (
-    <><h1>Hello!</h1></>
+    <><h1>You should not be here!</h1></>
   )
 }
 
