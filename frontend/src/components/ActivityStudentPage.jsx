@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { CssBaseline, Container, Typography, Button, Grid2, Paper, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
-import smiley from '../assets/smiley.png';
-import frowny from '../assets/frowny.png';
-import surprised from '../assets/surprised.png';
-import confused from '../assets/confused.png';
+import { emojis } from "../constants/constants";
+import { fetchActivity } from "../services/activityService";
+import { postFeedback } from "../services/feedbackService";
 
 const ActivityStudentPage = () => {
     const { id } = useParams();
@@ -23,24 +22,12 @@ const ActivityStudentPage = () => {
     }, [navigate]);
 
     useEffect(() => {
-        const fetchActivity = async () => {
-            const response = await fetch(`http://localhost:8080/api/v1/activities?id=${id}`);
-            const data = await response.json();
-            setActivity(data.activities[0]);
-        };
-        fetchActivity();
+        const fetchAndSet = async () => {
+            const fetchedActivity = await fetchActivity(id);
+            setActivity(fetchedActivity);
+        }
+        fetchAndSet();
     }, [id]);
-
-    const emojis = [
-        { id: 1, img: smiley, label: 'smiley' },
-        { id: 2, img: frowny, label: 'frowny' },
-        { id: 3, img: surprised, label: 'surprised' },
-        { id: 4, img: confused, label: 'confused' },
-    ];
-
-    const handleEmojiClick = (id) => {
-        setSelectedEmoji(selectedEmoji === id ? null : id);
-    };
 
     const handleSubmit = async () => {
         if (selectedEmoji) {
@@ -52,19 +39,16 @@ const ActivityStudentPage = () => {
                 timestamp: new Date().toISOString(),
             }];
 
-            const response = await fetch('http://localhost:8080/api/v1/feedback', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(feedbackData),
-            });
+            const response = await postFeedback(feedbackData);
 
             if (response.ok) {
                 setSubmitMessages(["Feedback-ul a fost trimis cu succes", "Multumim pentru feedback!"]);
             }
             else {
                 setSubmitMessages(["A aparut o problema", "Feedback-ul nu a fost trimis."]);
+                setTimeout(() => {
+                    navigate("/student");
+                }, 800);
             }
             setSelectedEmoji(null);
         }
@@ -103,7 +87,7 @@ const ActivityStudentPage = () => {
                 <Grid2 container spacing={2} style={{ height: '400px' }}>
                     {emojis.map((emoji) => (
                         <Grid2
-                            onClick={() => handleEmojiClick(emoji.id)}
+                            onClick={() => setSelectedEmoji(selectedEmoji === emoji.id ? null : emoji.id)}
                             size={6}
                             key={emoji.id}
                             style={{
@@ -150,7 +134,6 @@ const ActivityStudentPage = () => {
                 Inapoi la pagina studentului
             </Button>
 
-            {/* Modal for successful submission */}
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>{submitMessages[0]}</DialogTitle>
                 <DialogContent>

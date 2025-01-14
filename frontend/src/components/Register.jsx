@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useNavigate } from "react-router";
+import { register } from "../services/loginService";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -29,33 +30,25 @@ const Register = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        try {
-            const response = await fetch("http://localhost:8080/api/v1/users/register", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
-            });
+        const response = await register(formData);
 
-            if (response.ok) {
-                const result = await response.json();
-                setStatusMessage(`Success: ${result.message} Email: ${result.email}`);
-                navigate(`/login?email=${encodeURIComponent(result.email)}`);
-            } else if (response.status === 409) {
-                setStatusMessage("Error: Email already exists. Please try a different email.");
-                alert(statusMessage);
-            } else if (response.status === 500) {
-                setStatusMessage("Error: Registration failed. Please try again later.");
-            } else {
-                setStatusMessage("Unexpected error. Please try again.");
-            }
-        } catch (error) {
-            setStatusMessage("Error: Could not connect to the server. Please check your network.");
+        if (response.ok) {
+            const result = await response.json();
+            setStatusMessage(`Success: ${result.message} Email: ${result.email}`);
+            navigate(`/login?email=${encodeURIComponent(result.email)}`);
+        } else if (response.status === 409) {
+            setStatusMessage("Error: Email already exists. Please try a different email.");
+            alert(statusMessage);
+        } else if (response.status === 500) {
+            setStatusMessage("Error: Registration failed. Please try again later.");
+        } else {
+            setStatusMessage("Unexpected error. Please try again.");
         }
     };
 
     return (
         <>
-            <CssBaseline /> {/* Reset default browser styles */}
+            <CssBaseline />
             <Box
                 sx={{
                     display: "flex",
@@ -63,7 +56,7 @@ const Register = () => {
                     alignItems: "center",
                     minHeight: "100vh",
                     height: "100vh",
-                    overflow: "hidden", 
+                    overflow: "hidden",
                     bgcolor: "background.default",
                     color: "text.primary",
                     margin: 0,
@@ -83,7 +76,7 @@ const Register = () => {
                         borderRadius: 2,
                         bgcolor: "background.paper",
                         boxShadow: 3,
-                        border: "none", // Remove borders if any
+                        border: "none",
                     }}
                 >
                     <Typography

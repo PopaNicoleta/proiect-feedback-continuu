@@ -1,12 +1,30 @@
 import { Feedback } from "../models/config.js";
 import { Op } from "sequelize";
+import { getActivities } from "./activity.js";
 
 const createFeedbacks = async (feedbacks) => {
-    feedbacks.forEach(feedback => {
+    const activityId = feedbacks[0].activity_id;
+
+    const activities = await getActivities({ id: activityId });
+
+    if (activities.length === 0) return {notValid: true, inexistentActivity: true};
+
+    const activity = activities[0];
+    const activityStartTime = new Date(activity.start_time); 
+    const activityEndTime = new Date(activity.end_time);
+
+    const validFeedbacks = feedbacks.filter(feedback => {
+        const feedbackTimestamp = new Date(feedback.timestamp);
+        return feedbackTimestamp >= activityStartTime && feedbackTimestamp <= activityEndTime;
+    });
+
+    if (validFeedbacks.length === 0) return {notValid: true};
+
+    validFeedbacks.forEach(feedback => {
         delete feedback.id;
     });
 
-    return await Feedback.bulkCreate(feedbacks);
+    return await Feedback.bulkCreate(validFeedbacks);
 };
 
 const getFeedback = async (filters) => {
@@ -16,6 +34,10 @@ const getFeedback = async (filters) => {
 
     if (filters.activityId) {
         filterConditions.activity_id = filters.activityId;
+    }
+
+    if(filters.timestamp) {
+        filterConditions.timestamp = { [Op.gt]: new Date(filters.timestamp) };
     }
 
     if (filters.emoji) {

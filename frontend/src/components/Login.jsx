@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import CssBaseline from "@mui/material/CssBaseline";
+import { login } from "../services/loginService";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -29,11 +30,7 @@ const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const response = await fetch("http://localhost:8080/api/v1/users/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData),
-        });
+        const response = await login(formData);
 
         if(response.ok) {
             const result = await response.json();

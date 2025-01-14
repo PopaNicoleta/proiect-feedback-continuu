@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
-import { CssBaseline, TextField, Button, Container, Typography } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import { CssBaseline, Container, Typography, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
 import { useNavigate } from 'react-router';
-import { useEffect } from 'react';
 import Header from './Header';
+import { joinActivity } from "../services/studentService";
 
 const Student = () => {
+    const [dialogMessage, setDialogMessage] = useState("");
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [activityCode, setActivityCode] = useState("");
+
     const navigate = useNavigate();
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     useEffect(() => {
@@ -14,22 +18,23 @@ const Student = () => {
         }
     }, [navigate]);
 
-    const [activityCode, setActivityCode] = useState("");
-
     const handleJoin = async () => {
-        if (activityCode !== "") {
-            const response = await fetch(`http://localhost:8080/api/v1/activities/join`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({activityCode}),
-            });
-            if(response.ok) {
-                const data = await response.json();
-                const activityId = data.activityId;
-                console.log(activityId);
-                navigate(`/activity/${activityId}`);
-            }
+        const response = await joinActivity(activityCode);
+        if (response.status === 425) {
+            setDialogMessage("Activitatea nu este in desfasurare.");
+            setDialogOpen(true);
+        } else if (response.status === 404) {
+            setDialogMessage("Activitatea nu a fost gasita.");
+            setDialogOpen(true);
+        } else if (response.ok) {
+            const data = await response.json();
+            const activityId = data.activityId;
+            navigate(`/activity/${activityId}`);
         }
+    };
+
+    const handleCloseDialog = () => {
+        setDialogOpen(false);
     };
 
     return (
@@ -53,6 +58,18 @@ const Student = () => {
                 >
                     Join
                 </Button>
+
+                <Dialog open={dialogOpen} onClose={handleCloseDialog}>
+                    <DialogTitle>Notificare</DialogTitle>
+                    <DialogContent>
+                        <p>{dialogMessage}</p>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleCloseDialog} color="primary">
+                            OK
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </Container>
         </>
     );

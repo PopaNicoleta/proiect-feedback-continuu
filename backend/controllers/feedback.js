@@ -5,10 +5,17 @@ const getFeedback = async (req, res) => {
 };
 
 const createFeedbacks = async (req, res) => {
-    try {
-        res.status(201).send({ feedbacks: await feedbackService.createFeedbacks(req.body) });
-    } catch (err) {
-        res.status(400).send({ message: err.message });
+    const resultFromService = await feedbackService.createFeedbacks(req.body);
+    if (resultFromService.notValid) {
+        if(resultFromService.inexistentActivity) {
+            res.status(404).send({ message: "Activity not found." });
+        }
+        else {
+            res.status(400).send({ message: "Invalid request" });
+        }
+    }
+    else {
+        res.status(201).send({ feedbacks: resultFromService });
     }
 };
 

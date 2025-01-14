@@ -1,26 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-
-//TODO: ask try de ce crapa pe ESC
+import React, { useState, useEffect } from "react";
+import { Dialog, DialogTitle, DialogContent, TextField, DialogActions, Button } from "@mui/material";
+import { validateActivity } from "../services/professorService";
 
 const ActivityDialog = ({ open, onClose, activity, onSave }) => {
   const [formValues, setFormValues] = useState({});
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
-    const startDate = activity? new Date(activity.start_time).toISOString().slice(0, 16) : "";
-    const endDate = activity? new Date(activity.end_time).toISOString().slice(0, 16) : "";
+    const isValidDate = (date) => {
+      return date && !isNaN(new Date(date).getTime());
+    };
+  
+    const startDate = activity && isValidDate(activity.start_time)
+      ? new Date(activity.start_time).toISOString().slice(0, 16)
+      : "";
+  
+    const endDate = activity && isValidDate(activity.end_time)
+      ? new Date(activity.end_time).toISOString().slice(0, 16)
+      : "";
     setFormValues({
       title: activity?.title || "",
       description: activity?.description || "",
       start_time: startDate,
-      end_time: endDate
-    })
-  }, [activity])
+      end_time: endDate,
+    });
+  }, [activity]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -31,8 +35,16 @@ const ActivityDialog = ({ open, onClose, activity, onSave }) => {
   };
 
   const handleSave = () => {
-    onSave(formValues);
-    onClose();
+    if (validateActivity(formValues, setErrors)) {
+      onSave(formValues);
+      setFormValues({
+        title: "",
+        description: "",
+        start_time: "",
+        end_time: "",
+      });
+      onClose();
+    }
   };
 
   return (
@@ -49,6 +61,8 @@ const ActivityDialog = ({ open, onClose, activity, onSave }) => {
           value={formValues.title}
           onChange={handleChange}
           required
+          error={!!errors.title}
+          helperText={errors.title}
         />
         <TextField
           margin="dense"
@@ -71,8 +85,10 @@ const ActivityDialog = ({ open, onClose, activity, onSave }) => {
           value={formValues.start_time}
           onChange={handleChange}
           required
+          error={!!errors.start_time}
+          helperText={errors.start_time}
           slotProps={{
-            inputLabel: { shrink: true }
+            inputLabel: {shrink: true}
           }}
         />
         <TextField
@@ -85,13 +101,15 @@ const ActivityDialog = ({ open, onClose, activity, onSave }) => {
           value={formValues.end_time}
           onChange={handleChange}
           required
+          error={!!errors.end_time}
+          helperText={errors.end_time}
           slotProps={{
-            inputLabel: { shrink: true }
+            inputLabel: {shrink: true}
           }}
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => {onClose()}} color="primary">
+        <Button onClick={onClose} color="primary">
           Închide
         </Button>
         <Button onClick={handleSave} color="primary">
