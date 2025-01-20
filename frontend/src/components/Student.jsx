@@ -37,7 +37,7 @@ const Student = () => {
         setDialogOpen(false);
     };
 
-    return (
+    return userInfo ? (
         <>
             <CssBaseline />
             <Header userEmail={userInfo.userEmail} userRole="Student" />
@@ -72,7 +72,7 @@ const Student = () => {
                 </Dialog>
             </Container>
         </>
-    );
+    ) : (<></>);
 };
 
 export default Student;

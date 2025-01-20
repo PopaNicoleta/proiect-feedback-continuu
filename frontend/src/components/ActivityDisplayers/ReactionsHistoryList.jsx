@@ -46,7 +46,7 @@ const ReactionsHistoryList = ({ showAll, reactions }) => {
 
     return (
         <Paper elevation={3} style={{ marginTop: "20px", padding: "20px" }}>
-            {showAll && (
+            {showAll && Array.isArray(reactions) && reactions.length > 0 && (
                 <>
                     <Typography variant="h6" gutterBottom style={{ textAlign: "center" }}>
                         Statistici
@@ -56,7 +56,6 @@ const ReactionsHistoryList = ({ showAll, reactions }) => {
                     </div>
                 </>
             )}
-
             <Typography variant="h6" gutterBottom style={{ textAlign: "center" }}>
                 Istoric reacții
             </Typography>
