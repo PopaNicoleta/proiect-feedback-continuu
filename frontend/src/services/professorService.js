@@ -1,3 +1,5 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 const generateCode = (length = 8) => {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     let code = '';
@@ -8,7 +10,7 @@ const generateCode = (length = 8) => {
 }
 
 const updateActivity = async (updatedActivity) => {
-    await fetch("http://localhost:8080/api/v1/activities", {
+    await fetch(`${API_URL}/api/v1/activities`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -18,7 +20,7 @@ const updateActivity = async (updatedActivity) => {
 }
 
 const createActivity = async (activityData, professor_id, access_code) => {
-    await fetch("http://localhost:8080/api/v1/activities", {
+    await fetch(`${API_URL}/api/v1/activities`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify([{ ...activityData, professor_id, access_code }])
@@ -26,13 +28,13 @@ const createActivity = async (activityData, professor_id, access_code) => {
 }
 
 const deleteActivity = async (activityId) => {
-    const result = await fetch(`http://localhost:8080/api/v1/activities?id=${activityId}`, {
+    const result = await fetch(`${API_URL}/api/v1/activities?id=${activityId}`, {
         method: "DELETE"
     });
 }
 
 const getActivityList = async (userEmail) => {
-    const result = await fetch(`http://localhost:8080/api/v1/activities?email=${userEmail}`, {
+    const result = await fetch(`${API_URL}/api/v1/activities?email=${userEmail}`, {
         method: "GET"
     });
     const data = await result.json();
@@ -40,7 +42,7 @@ const getActivityList = async (userEmail) => {
 }
 
 const getActivityItem = async (activityId) => {
-    const response = await fetch(`http://localhost:8080/api/v1/activities?id=${activityId}`, {
+    const response = await fetch(`${API_URL}/api/v1/activities?id=${activityId}`, {
         method: 'GET',
     });
     if (response.ok) {
