@@ -37,7 +37,7 @@ Fiecare reacție a studentului este înregistrată ca feedback anonim, legat de 
 Profesorul poate accesa secțiunea dedicată activităților sale curente pentru a monitoriza feedback-ul în timp real.
 
 <h3>2. Analiza feedback-ului:</h3>
-Feedback-ul colectat este prezentat sub formă de flux, oferind profesorului o imagine de ansamblu asupra reacțiilor studenților și intensității acestora.
+Feedback-ul colectat este prezentat atât sub forma unui grafic pentru a evidenția repartiția reacțiilor oferite, cât și sub formă de flux (o listă cu istoricul feedback-ului), oferind profesorului o imagine de ansamblu asupra reacțiilor studenților și intensității acestora.
 
 <h1><i>Accesarea istoricului de feedback</i></h1>
 
