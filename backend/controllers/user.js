@@ -31,7 +31,7 @@ const deleteUser = async (req, res) => {
 
 const login = async (req, res) => {
     const loginData = await userService.login(req.body);
-    if (loginData.success) {//loginData primeste din Service datele de user, boolean success si boolean userExists
+    if (loginData.success) {
         res.status(200).send(loginData.user);
     }
     else {

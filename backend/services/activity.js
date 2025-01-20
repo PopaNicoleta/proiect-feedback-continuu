@@ -7,7 +7,6 @@ const createActivities = async (activities) => {
         delete activity.id;
     });
 
-    //lasam doar activitatile care au start time < end time
     activities.filter((activity) => {
         const startTime = new Date(activity.start_time);
         const endTime = new Date(activity.end_time);

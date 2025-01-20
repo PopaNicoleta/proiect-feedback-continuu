@@ -41,19 +41,9 @@ Feedback-ul colectat este prezentat sub formă de flux, oferind profesorului o i
 
 <h1><i>Accesarea istoricului de feedback</i></h1>
 
-<h3>1. Feedback-ul post-activitate:</h3>
+<h3>Feedback-ul post-activitate:</h3>
 După finalizarea activității, profesorul poate vizualiza istoricul feedback-ului oferit pe parcursul activității.
 
-<h3>2. Rapoarte detaliate:</h3>
-Profesorul poate accesa rapoarte care includ statistici și grafice pentru a înțelege mai bine dinamica reacțiilor studenților în timpul activității.
-
-<h1><i>Adăugarea unui student într-un grup</i></h1>
-
-<h3>1. Crearea grupurilor:</h3>
-Profesorul sau administratorul poate organiza studenții în grupuri pentru a facilita analiza feedback-ului.
-
-<h3>2. Organizarea feedback-ului pe grupuri:</h3>
-Studenții pot fi adăugați în grupuri pentru a structura feedback-ul în funcție de secțiuni sau clase, oferind o organizare suplimentară a informațiilor.
 
 <h1><i>Actualizarea activității de către profesor</i></h1>
 
