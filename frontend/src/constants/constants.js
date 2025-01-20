@@ -1,7 +1,7 @@
-import smiley from "../assets/smiley.png"
-import frowny from "../assets/frowny.png"
-import surprised from "../assets/surprised.png"
-import confused from "../assets/confused.png"
+import smiley from "../assets/smiley.png";
+import frowny from "../assets/frowny.png";
+import surprised from "../assets/surprised.png";
+import confused from "../assets/confused.png";
 
 const emojis = [
     { id: 1, img: smiley, label: 'smiley' },
@@ -15,9 +15,17 @@ const emojiToImg = {
     frowny,
     surprised,
     confused
-}
+};
+
+const emojiToName = {
+    smiley: 'Smiley',
+    frowny: 'Frowny',
+    surprised: 'Surprised',
+    confused: 'Confused'
+};
 
 export {
     emojis,
-    emojiToImg
-}
+    emojiToImg,
+    emojiToName
+};
